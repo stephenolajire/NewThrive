@@ -202,3 +202,6 @@ JAZZMIN_SETTINGS = {
     'show_ui_builder': True,
     'navigation_expanded': False,
 }
+
+# FRONTEND_URL = "https://lycentric-wears.onrender.com"
+FRONTEND_URL = "http://localhost:5174"

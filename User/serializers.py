@@ -64,6 +64,7 @@ class SignupSerializer(serializers.ModelSerializer):
         # Create user with hashed password
         user = User.objects.create_user(**validated_data)
         user.save()
+        print (**validated_data)
         return user
             
     
