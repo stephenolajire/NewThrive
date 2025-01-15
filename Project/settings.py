@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -163,6 +164,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://example.com",
     "https://sub.example.com",
     "http://localhost:5173",
+    "http://localhost:5174",
     "http://127.0.0.1:9000",
     "https://thrive-lake-five.vercel.app",
 ]
@@ -185,3 +187,19 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 PAYSTACK_SECRET_KEY = config ('PAYSTACK_SECRET_KEY')
 FLUTTER_WAVE_SECRET_KEY = config ('FLUTTER_WAVE_SECRET_KEY')
+
+
+JAZZMIN_SETTINGS = {
+    'site_title': 'Thrive Website',
+    'site_header': 'Thrive Admin',
+    'welcome_sign': 'Welcome to Thrive Admin',
+    "site_logo": "img/logo one.jpeg",
+    "login_logo": "img/logo one.jpeg",
+    "site_logo_classes": "img-circle",
+    "copyright": "The Outsource Network copyright 2025",
+    'show_sidebar': True,
+    'related_modal_active': True,
+    'changeform_format': 'stacked',
+    'show_ui_builder': True,
+    'navigation_expanded': False,
+}
