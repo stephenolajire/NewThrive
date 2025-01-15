@@ -62,6 +62,40 @@ class VerifyEmailAddressView(APIView):
             return Response({"message": "Invalid token!"}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class ResendVerificationLinkView(APIView):
+    permission_classes = [AllowAny]  # Allow anyone to access this view
+
+    def post(self, request):
+        email = request.data.get("email")
+        
+        # Check if the email is provided
+        if not email:
+            return Response({"message": "Email is required"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            user = User.objects.get(email=email)
+            
+            # Check if the user is already verified
+            if user.verified:
+                return Response({"message": "Email is already verified"}, status=status.HTTP_400_BAD_REQUEST)
+            
+            # Generate new verification link
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            token_generator = PasswordResetTokenGenerator()
+            token = token_generator.make_token(user)
+            verification_link = f"{settings.FRONTEND_URL}/confirm_email/{uid}/{token}"
+
+            # Send verification email
+            mail_subject = 'Resend Activation Link'
+            message = f"Click the link to activate your account: {verification_link}"
+            send_mail(mail_subject, message, settings.EMAIL_HOST_USER, [user.email])
+            
+            return Response({"message": "Verification link resent successfully"}, status=status.HTTP_200_OK)
+        
+        except User.DoesNotExist:
+            return Response({"message": "User with this email does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
+
 class LoginView(APIView):
     permission_classes = [AllowAny]
     def post(self, request):
